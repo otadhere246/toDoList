@@ -6,6 +6,7 @@ import dbConnection from "./config/dbconnection";
 dotenv.config();
 
 const app = express();
+console.log(".added log ")
 
 //..............
 const PORT = process.env.PORT || 3000;
