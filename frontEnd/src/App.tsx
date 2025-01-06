@@ -4,7 +4,7 @@ import './App.css'
 import MyComponent from './component/MyComponent';
 
 function App() {
-  console.log("from najib")
+  console.log("from najib______")
   const name = 'ali';
 
   return (
