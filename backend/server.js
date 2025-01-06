@@ -1,14 +1,17 @@
 import express from "express";
 import dotenv from "dotenv";
-import dbConnection from "./config/dbconnection.js";
+import { connect } from "mongoose";
+import dbConnection from "./config/dbconnection";
 
 dotenv.config();
 
 const app = express();
-dbConnection()
 
+//..............
 const PORT = process.env.PORT || 3000;
 
+dbConnection();
+// .................
 app.listen(PORT, () => {
   console.log(`Server is runing on port ${PORT}`);
 })
