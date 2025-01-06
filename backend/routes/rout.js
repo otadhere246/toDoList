@@ -1,22 +1,10 @@
-import mongoose from 'mongoose';
+import express from 'express';
+import { createuser, sample } from '../controllers/user.js';
 
-const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-}, { timestamps: true });
+const router = express.Router(); // Use express.Router() to handle routes
 
-const User = mongoose.model('User', userSchema);
+// Define routes
+router.post('/create', createuser);
+router.get("/", sample);
 
-export default User;
+export default router;
