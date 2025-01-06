@@ -1,9 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
 import userRoutes from './routes/rout.js';
 import { connect } from 'mongoose';
 import dbConnection from './config/dbconnection.js';
+import cookieParser from 'cookie-parser';
+import cors from "cors"
 
 dotenv.config();
 
@@ -11,14 +12,15 @@ const app = express();
 
 // Middleware to parse incoming JSON
 app.use(express.json());
-app.use(bodyParser.urlencoded())
-
+app.use(cors())
+app.use(cookieParser())
 // Connect to the database
 dbConnection();
-app.get("home", (req, res) => { console.log("...........") })
 
-// Routes
-app.use("/api", userRoutes);
+
+
+// Use routes defined in `userRoutes`
+app.use("/api/auth", userRoutes);
 
 const PORT = process.env.PORT || 3000;
 

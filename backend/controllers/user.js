@@ -1,16 +1,19 @@
-import user from "../models/user.js";
-
+import User from "../models/user.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 export const createuser = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password, role } = req.body;
 
         // Validate the user data
-        if (!username || !password) {
-            return res.status(400).json({ message: "Username and password are required" });
+        if (!email || !password || !role) {
+            return res.status(400).json({ message: "Email, password, and role are required" });
         }
 
+        const hashedpassword = await bcrypt.hash(password, 10)
+
         // Create new user
-        const newUser = new user({ username, password });
+        const newUser = new User({ email, password: hashedpassword, role });
 
         // Save the user to the database
         await newUser.save();
@@ -22,6 +25,19 @@ export const createuser = async (req, res) => {
         res.status(500).json({ message: "Server error, please try again later" });
     }
 }
+
+export const getusers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (error) {
+        console.error("an error occured: ", error.message);
+        res.status(500).json({ message: "Server error, please try again later" });
+    }
+}
+
+
+
 
 export const sample = (req, res) => {
     res.send("Sample route");
