@@ -4,12 +4,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Najib",
   "license": "ISC",
-  "description": "",
+  "description": "A backend server for the project",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.3",
     "nodemon": "^3.1.9"
