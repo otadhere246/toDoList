@@ -19,7 +19,7 @@ dbConnection();
 
 
 
-// Use routes defined in `userRoutes`
+// Use routes defined in userRoutes
 app.use("/api/auth", userRoutes);
 
 const PORT = process.env.PORT || 3000;
