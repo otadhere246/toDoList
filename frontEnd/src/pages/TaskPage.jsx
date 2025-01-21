@@ -82,7 +82,7 @@ const TasksPage = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-4xl mx-auto p-6 bg-gray-50 shadow-lg rounded-lg">
+      <div className="max-w-6xl mx-auto p-6 bg-gray-100 shadow-lg rounded-lg">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Tasks</h1>
           <button
@@ -124,19 +124,22 @@ const TasksPage = () => {
                   <div>
                     <button
                       onClick={() => handleEdit(task)}
-                      className="text-blue-500 hover:underline mr-2"
+                      // className="text-blue-500 hover:underline mr-2"
+                      className="bg-blue-500 text-white px-3 py-1 ml-4 rounded-lg hover:bg-blue-600"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(task._id)}
-                      className="text-red-500 hover:underline"
+                      // className="text-red-500 hover:underline"
+                      className="bg-red-500 text-white px-3 py-1 ml-2 rounded-lg hover:bg-red-600"
                     >
                       Delete
                     </button>
                     <button
                       onClick={() => handleComplete(task._id)}
-                      className="text-green-500 hover:underline"
+                      // className="text-green-500 hover:underline"
+                      className="bg-green-500 text-white px-3 py-1 ml-2 rounded-lg hover:bg-green-600"
                     >
                       Complete
                     </button>
