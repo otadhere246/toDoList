@@ -1,9 +1,35 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Navbar from "../components/Navbar";
 
 const DashboardPage = () => {
-  const totalTasks = 50;
-  const completedTasks = 30;
-  const pendingTasks = 20;
+  const [totalTasks, setTotalTasks] = useState(0);
+  const [completedTasks, setCompletedTasks] = useState(0);
+  const [pendingTasks, setPendingTasks] = useState(0);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        // Replace with your actual API endpoint
+        const response = await axios.get('http://localhost:600/api/auth/gettasks');
+        const tasks = response.data;
+
+        // Calculate totals dynamically
+        const total = tasks.length;
+        const completed = tasks.filter((task) => task.completed).length;
+        const pending = total - completed;
+
+        // Update state
+        setTotalTasks(total);
+        setCompletedTasks(completed);
+        setPendingTasks(pending);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
 
   return (
     <div>
