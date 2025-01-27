@@ -29,7 +29,9 @@ const LoginPage = () => {
       console.log("response ",response)
 
       // Store the response data in local storage
-      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('token', JSON.stringify(response.data.token));
+
       navigate('/dashboard')
       // alert('Login successful!');
     } catch (error) {

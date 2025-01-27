@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import apiClient from "../apiClient";
 
 const TasksPage = () => {
   const [tasks, setTasks] = useState([]);
@@ -17,11 +18,12 @@ const TasksPage = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:600/api/auth/gettasks');
-      setTasks(response.data);
+      const response = await apiClient.get('auth/gettasks');
+  
+      setTasks(response.data); // Assuming this is a React state setter function
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error('Error fetching tasks:', error.message);
       setLoading(false);
     }
   };
@@ -33,11 +35,11 @@ const TasksPage = () => {
   const handleCreateOrUpdate = async () => {
     try {
       if (editTask) {
-        await axios.put(`http://localhost:600/api/auth/update/${editTask._id}`, taskData);
+        await apiClient.put(`http://localhost:600/api/auth/update/${editTask._id}`, taskData);
       } else {
-        await axios.post('http://localhost:600/api/auth/newtask', taskData);
+        await apiClient.post('http://localhost:600/api/auth/newtask', taskData);
       }
-      const response = await axios.get('http://localhost:600/api/auth/gettasks');
+      const response = await apiClient.get('http://localhost:600/api/auth/gettasks');
       setTasks(response.data);
       setShowModal(false);
       setTaskData({ title: '', description: '' });
@@ -55,7 +57,7 @@ const TasksPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:600/api/auth/deletetask/${id}`);
+      await apiClient.delete(`http://localhost:600/api/auth/deletetask/${id}`);
       setTasks(tasks.filter((task) => task._id !== id));
     } catch (error) {
       console.error('Error deleting task:', error);
@@ -70,7 +72,7 @@ const TasksPage = () => {
 
   const handleComplete = async (id) => {
     try {
-      await axios.post(`http://localhost:600/api/auth/complete/${id}`,{
+      await apiClient.post(`http://localhost:600/api/auth/complete/${id}`,{
         completed:true
       });
       fetchTasks()
@@ -82,7 +84,7 @@ const TasksPage = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-6xl mx-auto p-6 bg-gray-100 shadow-lg rounded-lg">
+      <div className="max-w-6xl mx-auto mb-10 p-6 bg-gray-100 shadow-lg rounded-lg">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Tasks</h1>
           <button
@@ -112,9 +114,9 @@ const TasksPage = () => {
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {filteredTasks.map((task) => (
-              <div key={task._id} className="bg-white shadow-md rounded-lg p-4">
+              <div key={task._id} className="bg-white shadow-md hover:bg-gray-100 rounded-lg p-4">
                 <h2 className="text-lg font-bold mb-1">{task.title}</h2>
-                <p className="text-sm text-gray-600 mb-2">{task.description}</p>
+                <p className="text-sm text-black-500 mb-2">{task.description}</p>
                 <div className="flex justify-between items-center">
                   <span
                     className={`text-sm font-semibold ${task.completed ? 'text-green-500' : 'text-red-500'}`}
